@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import hu.morabarna.csaladfa.entities.ParentsChildren;
 import hu.morabarna.csaladfa.repositories.ParentsChildrenRepository;
 import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOIdName;
 import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOIdNameSex;

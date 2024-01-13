@@ -1,7 +1,5 @@
 package hu.morabarna.csaladfa.repositories;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import javax.sql.DataSource;
 

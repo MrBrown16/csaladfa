@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import hu.morabarna.csaladfa.dtos.personDtos.in.PersonDTOCreate;
 import hu.morabarna.csaladfa.dtos.personDtos.in.PersonDTOUpdate;
 import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOBasic;
-import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOShort;
 import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOShortest;
-import hu.morabarna.csaladfa.repositories.RepoConfig;
 import hu.morabarna.csaladfa.services.PersonService;
 
 import java.time.LocalDate;

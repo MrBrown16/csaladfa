@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import hu.morabarna.csaladfa.dtos.personDtos.in.PersonDTOCreate;
@@ -13,7 +12,6 @@ import hu.morabarna.csaladfa.dtos.personDtos.in.PersonDTOUpdate;
 import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOBasic;
 import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOIdName;
 import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOIdNameSex;
-import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOShort;
 import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOShortest;
 import hu.morabarna.csaladfa.entities.Person;
 import hu.morabarna.csaladfa.entities.ParentsChildren;
@@ -21,7 +19,6 @@ import hu.morabarna.csaladfa.repositories.PersonRepository;
 import hu.morabarna.csaladfa.repositories.ParentsChildrenRepository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 

@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOIdName;
-import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOShort;
 import hu.morabarna.csaladfa.dtos.personDtos.out.PersonDTOShortest;
 import hu.morabarna.csaladfa.entities.Person;
 
