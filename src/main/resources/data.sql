@@ -9,7 +9,7 @@ INSERT INTO persons (birthDate,birthLocation,deathDate,deathLocation,name,sex) V
 
 
 -- CHILDREN_PERSON_ID  	PARENTS_PERSON_ID  
-INSERT INTO PERSONS_PERSONS (children_person_id,parents_person_id) VALUES
+INSERT INTO parents_children (child_id,parent_id) VALUES
 (2,1),
 (2,3),
 (4,2),
