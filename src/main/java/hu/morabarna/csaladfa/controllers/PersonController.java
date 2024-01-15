@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
+// @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/person")
 public class PersonController {
     
@@ -40,6 +41,11 @@ public class PersonController {
             return personService.getPerson(id);
         }
         return Optional.empty();
+    }
+    @GetMapping("/firstfifty")
+    public List<PersonDTOBasic> getPersonFirstFifty() {
+        return personService.getPeople();
+        
     }
 
     @GetMapping("/reference/{name}")

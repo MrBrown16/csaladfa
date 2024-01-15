@@ -1,10 +1,13 @@
 package hu.morabarna.csaladfa.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import hu.morabarna.csaladfa.dtos.personDtos.in.PersonDTOCreate;
@@ -58,6 +61,30 @@ public class PersonService {
             presentPerson.deathDate(), presentPerson.deathLocation(), children));
         }
         return Optional.empty();
+    }
+    @Transactional
+    public List<PersonDTOBasic> getPeople() {
+        Pageable pageable = PageRequest.of(0, 50);
+        List<PersonDTOShortest> people = personRepository.findFirstFifty(pageable);
+        List<PersonDTOBasic> returnPeople = new ArrayList<>(50);
+        for (PersonDTOShortest person:people) {
+            List<PersonDTOIdName> children = parentsChildrenRepository.getChildrenByParentId(person.id());
+            List<PersonDTOIdNameSex> parents = parentsChildrenRepository.getParentsSexByChildId(person.id());
+            PersonDTOIdNameSex mother=new PersonDTOIdNameSex(null, null, false);
+            PersonDTOIdNameSex father=new PersonDTOIdNameSex(null, null, false);
+            for (PersonDTOIdNameSex parent : parents) {
+                if (parent.sex()) {
+                    mother = parent;
+                }else{
+                    father = parent;
+                }
+            }
+            returnPeople.add(new PersonDTOBasic(person.id(), person.name(), person.sex(),
+            person.birthDate(), person.birthLocation(), mother.id(),
+            mother.name(), father.id(), father.name(),
+            person.deathDate(), person.deathLocation(), children));
+        }
+        return returnPeople;
     }
 
     public List<PersonDTOShortest> findByNameLike(String name) {
