@@ -51,7 +51,7 @@ public class PersonController {
     }
 
     @PostMapping("/create")
-    public boolean addPerson(@RequestBody PersonDTOCreate person) {
+    public boolean addPerson(@RequestBody PersonDTOUpdate person) {
         
         return personService.saveNewPerson(person);
     }

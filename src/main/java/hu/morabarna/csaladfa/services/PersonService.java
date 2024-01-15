@@ -65,8 +65,8 @@ public class PersonService {
     }
 
     @Transactional
-    public boolean saveNewPerson(PersonDTOCreate person) {
-        if (person.name() != null && person.name().length() > 3 && person.birthDate() != null
+    public boolean saveNewPerson(PersonDTOUpdate person) {
+        if (person.id()==null && person.name() != null && person.name().length() > 3 && person.birthDate() != null
                 && person.birthLocation() != null) {
             Person newPerson = new Person();
             newPerson.setName(person.name());
@@ -107,7 +107,7 @@ public class PersonService {
             if (person.children().size() > 0) {
                 Set<ParentsChildren> children = new HashSet<>();
                 for (PersonDTOIdName child : person.children()) {
-                    if (child.id() != null && child.id() > 3) {
+                    if (child.id() != null && child.id() > 0) {
                         Person childEntity = entityManager.find(Person.class, child.id());
                         if(childEntity != null) {
                             ParentsChildren parentsChildren = new ParentsChildren(newPerson, childEntity);
