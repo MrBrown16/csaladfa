@@ -37,4 +37,24 @@ public class ParentsChildren {
     @JoinColumn(name = "child_id")
     private Person child;
 
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + (parent != null ? parent.getId().hashCode() : 0);
+        result = 31 * result + (child != null ? child.getId().hashCode() : 0);
+        return result;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ParentsChildren that = (ParentsChildren) o;
+
+        if (parent != null ? !parent.getId().equals(that.parent != null ? that.parent.getId() : null) : that.parent != null) return false;
+        return child != null ? child.getId().equals(that.child != null ? that.child.getId() : null) : that.child == null;
+    }
 }

@@ -27,7 +27,7 @@ public class CsaladfaApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(@NonNull CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+				registry.addMapping("/**").allowedMethods("GET","HEAD","POST","PUT","DELETE").allowedOrigins("http://localhost:4200");
 			}
 		};
 	}

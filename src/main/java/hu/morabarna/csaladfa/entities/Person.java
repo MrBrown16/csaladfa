@@ -1,6 +1,7 @@
 package hu.morabarna.csaladfa.entities;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -50,4 +51,52 @@ public class Person {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("parent")
     private Set<ParentsChildren> children;
+
+    public void setChildren(Set<ParentsChildren> children) {
+        if (this.children == null) {
+            this.children = children;
+        } else {
+            // this.children.clear();
+            if (children != null) {
+                for (ParentsChildren child : children) {
+                    addChild(child);
+                }
+            }
+        }
+    }
+
+    public void addChild(ParentsChildren child) {
+        if (this.children == null) {
+            this.children = new HashSet<>();
+        }
+    
+        // Check if the child is not already in the set
+        if (!this.children.contains(child)) {
+            this.children.add(child);
+            
+            // Check if the parent is not already set for the child
+            if (child.getParent() != this) {
+                child.setParent(this);
+            }
+        }
+    }
+
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        return result;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        return id != null ? id.equals(person.id) : person.id == null;
+    }
 }

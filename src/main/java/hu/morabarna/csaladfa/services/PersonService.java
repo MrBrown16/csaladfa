@@ -152,6 +152,7 @@ public class PersonService {
             }
 
             try {
+                System.out.println(person.toString());
                 personRepository.save(newPerson);
             } catch (Exception e) {
                 System.err.println(
@@ -169,7 +170,7 @@ public class PersonService {
         if (person.id() == id && id != null && personRepository.existsById(id)) {
             if (person.name() != null && person.name().length() > 3 && person.birthDate() != null
                     && person.birthLocation() != null) {
-                Person newPerson = new Person();
+                Person newPerson = entityManager.find(Person.class, person.id());
                 newPerson.setName(person.name());
                 newPerson.setSex(person.sex());
                 newPerson.setBirthDate(person.birthDate());
@@ -207,6 +208,7 @@ public class PersonService {
                 newPerson.setDeathLocation(person.deathLocation());
 
                 if (person.children().size() > 0) {
+                    System.out.println("------------------------------------"+person.children().size()+"------------------------------------");
                     Set<ParentsChildren> children = new HashSet<>();
                     for (PersonDTOIdName child : person.children()) {
                         if (child.id() != null && child.id() > 0 ) {
@@ -223,10 +225,13 @@ public class PersonService {
                             }
                         } 
                     }
+                    System.out.println("before newPerson addchildren------------------------------------"+newPerson.toString()+"----------------------------------------------");
                     newPerson.setChildren(children);
+                    System.out.println("after newPerson addchildren------------------------------------"+newPerson.toString()+"----------------------------------------------");
                 }
 
                 try {
+                    System.out.println(newPerson.toString());
                     personRepository.save(newPerson);
                 } catch (Exception e) {
                     System.err.println(
