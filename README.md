@@ -1,12 +1,21 @@
-endpoints:
-http://localhost:8080/
-GET person/reference/:name
-GET person/:id
-GET person/create    (example object)
-GET person/update    (example object)
-PUT person/update/:id  
-POST person/create
-DELETE person/del/:id
+endpoints:  
+
+http://localhost:8080/  
+
+GET person/reference/:name  
+
+GET person/:id  
+
+GET person/create    (example object)  
+
+GET person/update    (example object)  
+
+PUT person/update/:id   
+
+POST person/create  
+
+DELETE person/del/:id  
+
 
 
 
