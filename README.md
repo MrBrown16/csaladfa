@@ -1,3 +1,15 @@
+endpoints:
+http://localhost:8080/
+GET person/reference/:name
+GET person/:id
+GET person/create    (example object)
+GET person/update    (example object)
+PUT person/update/:id  
+POST person/create
+DELETE person/del/:id
+
+
+
 Get /person/{id}
 
 {"id":4,"name":"Ákos","sex":false,"birthDate":"2011-05-09T22:00:00.000+00:00","birthLocation":"Bécs","motherId":2,"motherName":"Mira","fatherId":null,"fatherName":null,"deathDate":null,"deathLocation":null,"childId":null,"childName":null}
