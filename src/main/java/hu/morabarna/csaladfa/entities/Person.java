@@ -23,7 +23,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@EqualsAndHashCode
 @Table(name = "persons")
 public class Person {
     //Purpose: main entity 
@@ -56,7 +55,7 @@ public class Person {
         if (this.children == null) {
             this.children = children;
         } else {
-            // this.children.clear();
+            this.children.clear();
             if (children != null) {
                 for (ParentsChildren child : children) {
                     addChild(child);

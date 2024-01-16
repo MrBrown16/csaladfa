@@ -96,6 +96,14 @@ public class PersonService {
         if (person.id()==null && person.name() != null && person.name().length() > 3 && person.birthDate() != null
                 && person.birthLocation() != null) {
             Person newPerson = new Person();
+            try {
+                System.out.println(person.toString());
+                newPerson = personRepository.save(newPerson);
+            
+            } catch (Exception e) {
+                System.err.println("Error in saving new Person Entity: " + e);
+                return false;
+            }
             newPerson.setName(person.name());
             newPerson.setSex(person.sex());
             newPerson.setBirthDate(person.birthDate());
@@ -106,28 +114,28 @@ public class PersonService {
                 if (mother != null) {
                     ParentsChildren parentsChildren = new ParentsChildren(mother, newPerson);
                     parentsChildrenRepository.save(parentsChildren);
-                }else if (person.motherName() != null && person.motherName().length() > 3) {
-                    // ... (create new Person entity for mother)
-                    ParentsChildren parentsChildren = new ParentsChildren(createAndSavePartialEntityParent(person.motherName(), true), newPerson);
-                    parentsChildrenRepository.save(parentsChildren);
                 }else{
                     System.err.println("The given Person Entity (Mother) does not exist: ");
                 }
-            } 
+            } else if (person.motherName() != null && person.motherName().length() > 3) {
+                // ... (create new Person entity for mother)
+                ParentsChildren parentsChildren = new ParentsChildren(createAndSavePartialEntityParent(person.motherName(), true), newPerson);
+                parentsChildrenRepository.save(parentsChildren);
+            }
 
             if (person.fatherId() != null && person.fatherId() > 0) {
                 Person father = entityManager.find(Person.class, person.fatherId());
                 if (father != null) {
                     ParentsChildren parentsChildren = new ParentsChildren(father, newPerson);
                     parentsChildrenRepository.save(parentsChildren);
-                }else if (person.fatherName() != null && person.fatherName().length() > 3) {
-                    // ... (create new Person entity for father)
-                    ParentsChildren parentsChildren = new ParentsChildren(createAndSavePartialEntityParent(person.fatherName(), false), newPerson);
-                    parentsChildrenRepository.save(parentsChildren);
                 }else {
                     System.err.println("The given Person Entity (Father) does not exist: ");
                 }
-            } 
+            } else if (person.fatherName() != null && person.fatherName().length() > 3) {
+                // ... (create new Person entity for father)
+                ParentsChildren parentsChildren = new ParentsChildren(createAndSavePartialEntityParent(person.fatherName(), false), newPerson);
+                parentsChildrenRepository.save(parentsChildren);
+            }
             newPerson.setDeathDate(person.deathDate());
             newPerson.setDeathLocation(person.deathLocation());
 
@@ -139,13 +147,13 @@ public class PersonService {
                         if(childEntity != null) {
                             ParentsChildren parentsChildren = new ParentsChildren(newPerson, childEntity);
                             children.add(parentsChildren);
-                        } else if (child.name() != null && child.name().length() > 3) {
-                            // ... (create new Person entity for child)
-                            ParentsChildren parentsChildren = new ParentsChildren(newPerson, createAndSavePartialEntityChild(child.name()));
-                            children.add(parentsChildren);
                         }else {
                             System.err.println("The given Person Entity (Child) does not exist: ");
                         }
+                    } else if (child.name() != null && child.name().length() > 3) {
+                        // ... (create new Person entity for child)
+                        ParentsChildren parentsChildren = new ParentsChildren(newPerson, createAndSavePartialEntityChild(child.name()));
+                        children.add(parentsChildren);
                     }
                 }
                 newPerson.setChildren(children);
@@ -171,6 +179,7 @@ public class PersonService {
             if (person.name() != null && person.name().length() > 3 && person.birthDate() != null
                     && person.birthLocation() != null) {
                 Person newPerson = entityManager.find(Person.class, person.id());
+                System.out.println("--------------------------newPerson after entityManager.find()"+newPerson.toString()+"--------------------------------");
                 newPerson.setName(person.name());
                 newPerson.setSex(person.sex());
                 newPerson.setBirthDate(person.birthDate());
@@ -181,28 +190,28 @@ public class PersonService {
                     if (mother != null) {
                         ParentsChildren parentsChildren = new ParentsChildren(mother, newPerson);
                         parentsChildrenRepository.save(parentsChildren);
-                    }else if (person.motherName() != null && person.motherName().length() > 3) {
-                        // ... (create new Person entity for mother)
-                        ParentsChildren parentsChildren = new ParentsChildren(createAndSavePartialEntityParent(person.motherName(), true), newPerson);
-                        parentsChildrenRepository.save(parentsChildren);
                     }else{
                         System.err.println("The given Person Entity (Mother) does not exist: ");
                     }
-                } 
+                } else if (person.motherName() != null && person.motherName().length() > 3) {
+                    // ... (create new Person entity for mother)
+                    ParentsChildren parentsChildren = new ParentsChildren(createAndSavePartialEntityParent(person.motherName(), true), newPerson);
+                    parentsChildrenRepository.save(parentsChildren);
+                }
     
                 if (person.fatherId() != null && person.fatherId() > 0) {
                     Person father = entityManager.find(Person.class, person.fatherId());
                     if (father != null) {
                         ParentsChildren parentsChildren = new ParentsChildren(father, newPerson);
                         parentsChildrenRepository.save(parentsChildren);
-                    }else if (person.fatherName() != null && person.fatherName().length() > 3) {
-                        // ... (create new Person entity for father)
-                        ParentsChildren parentsChildren = new ParentsChildren(createAndSavePartialEntityParent(person.fatherName(), false), newPerson);
-                        parentsChildrenRepository.save(parentsChildren);
                     }else {
                         System.err.println("The given Person Entity (Father) does not exist: ");
                     }
-                } 
+                } else if (person.fatherName() != null && person.fatherName().length() > 3) {
+                    // ... (create new Person entity for father)
+                    ParentsChildren parentsChildren = new ParentsChildren(createAndSavePartialEntityParent(person.fatherName(), false), newPerson);
+                    parentsChildrenRepository.save(parentsChildren);
+                }
 
                 newPerson.setDeathDate(person.deathDate());
                 newPerson.setDeathLocation(person.deathLocation());
@@ -216,29 +225,30 @@ public class PersonService {
                             if(childEntity != null) {
                                 ParentsChildren parentsChildren = new ParentsChildren(newPerson, childEntity);
                                 children.add(parentsChildren);
-                            }else if (child.name() != null&& child.name().length() > 3) {
-                                // ... (create new Person entity for child)
-                                ParentsChildren parentsChildren = new ParentsChildren(newPerson, createAndSavePartialEntityChild(child.name()));
-                                children.add(parentsChildren);
                             }else {
                                 System.err.println("The given Person Entity (Child) does not exist: ");
                             }
-                        } 
+                        } else if (child.name() != null&& child.name().length() > 3) {
+                            // ... (create new Person entity for child)
+                            ParentsChildren parentsChildren = new ParentsChildren(newPerson, createAndSavePartialEntityChild(child.name()));
+                            children.add(parentsChildren);
+                        }
                     }
                     System.out.println("before newPerson addchildren------------------------------------"+newPerson.toString()+"----------------------------------------------");
                     newPerson.setChildren(children);
                     System.out.println("after newPerson addchildren------------------------------------"+newPerson.toString()+"----------------------------------------------");
                 }
 
-                try {
-                    System.out.println(newPerson.toString());
-                    personRepository.save(newPerson);
-                } catch (Exception e) {
-                    System.err.println(
-                            "---------------------------Error in saving new Person Entity ------------------------------"
-                                    + e);
-                    return false;
-                }
+                // try {
+                //     System.out.println(newPerson.toString());
+                //     personRepository.save(newPerson);
+                // } catch (Exception e) {
+                //     System.err.println(
+                //             "---------------------------Error in saving new Person Entity ------------------------------"
+                //                     + e);
+                //     return false;
+                // }
+                entityManager.flush();
                 return true;
             }
         }
